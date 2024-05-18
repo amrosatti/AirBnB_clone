@@ -1,4 +1,4 @@
-# AirBnB Clone Console Project
+# AirBnB Clone | Console Project
 
 This project is the first step towards building a full-fledged AirBnB clone application. It implements a command-line interpreter (CLI) to manage core AirBnB objects.
 
@@ -85,43 +85,6 @@ $ echo "command" | ./console.py
 
 4. Follow the on-screen instructions to interact with the CLI.
 
-### Usage
 
-The CLI provides functionalities for:
 
-* `create`: Creates a new object (User, State, City, or Place) based on user input.
-* `show`: Retrieves and displays information about an existing object by ID.
-* `update`: Updates attributes of an existing object.
-* `all`: Lists all objects of a specific type.
-* `delete`: Deletes an existing object.
-
-Type `help` or `?` for a list of available commands and their usage.
-
-### Testing
-
-Unit tests are included in the `tests` folder to verify the functionality of each class and the storage engine. You can run the tests using:
-
-```
-pytest
-```
-
-### Next Steps
-
-This project provides the foundation for building a complete AirBnB clone application. The next steps could involve:
-
-* Developing a web interface using HTML, CSS, and JavaScript.
-* Implementing a database storage system for persistent data storage.
-* Creating an API for data access from the web frontend.
-
-By completing this initial project, you'll gain valuable experience in object-oriented programming, data management, and testing, crucial for building a web application like AirBnB.
-
-### License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-### Contributions
-
-We welcome contributions to this project. Please submit pull requests with proper testing and documentation.
-
-This README file provides a clear overview of the project, installation instructions, usage guide, and next steps. It also emphasizes testing and encourages contributions. Feel free to customize it further as your project evolves.
-
+to be continued...
