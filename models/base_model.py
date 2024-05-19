@@ -9,23 +9,22 @@ from datetime import datetime
 class BaseModel:
     """BaseModel Class"""
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Constructor
 
         Args:
             args (:obj:tuble): Not used
             kwargs (:obj:dict): Arguments dictionary
+                                (given if constructing by a dict)
         """
-        if kwargs not None:
-            for k, v in kwargs:
-                if k = '__class__':
-                    continue
-                if k in ['created_at', 'updated_at']:
-                    self.setattr(k, datetime.fromisoformat(v))
+        if kwargs is not None:
+            for k in list(kwargs.keys()):
+                if k != '__class__':
+                    if k in ['created_at', 'updated_at']:
+                        setattr(self, k, datetime.fromisoformat(kwargs[k]))
 
-                self.setattr(k, v)
-                return
-
+                    setattr(self, k, kwargs[k])
+        else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
@@ -33,7 +32,7 @@ class BaseModel:
     def save(self):
         """Updates 'updated_at' attribute
         """
-        self.setattr('updated_at', datetime.now())
+        setattr(self, 'updated_at', datetime.now())
 
     def to_dict(self):
         """Returns a dictionary containing '__dict__' adding class name
