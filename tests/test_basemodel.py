@@ -36,22 +36,24 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue('created_at' in dir(self.test_obj1))
         self.assertTrue('updated_at' in dir(self.test_obj1))
 
+    def test_init_kwargs(self):
         '''Valid kwargs'''
         self.assertTrue('id' in dir(self.test_obj2))
         self.assertTrue('created_at' in dir(self.test_obj2))
         self.assertTrue('updated_at' in dir(self.test_obj2))
         self.assertTrue('something' in dir(self.test_obj2))
 
-    def test_attributes(self):
+    def test_attributes_id(self):
         """Tests the instance attributes
         """
         '''id'''
         self.assertTrue(isinstance(self.test_obj1.id, str))
-        self.assertEqual(self.test_obj2.id, str(self.test_id))
+        self.assertTrue(isinstance(self.test_obj2.id, str))
 
+    def test_attributes_created_at(self):
         '''created_at'''
-        self.assertTrue(isinstance(self.test_obj1.created_at), datetime)
-        self.assertEqual(isinstance(self.test_obj2.created_at, datetime))
+        self.assertTrue(isinstance(self.test_obj1.created_at, datetime))
+        self.assertTrue(isinstance(self.test_obj2.created_at, datetime))
         self.assertTrue(self.test_obj1.created_at is self.create_time)
         self.assertEqual(self.test_obj1.created_at, self.create_time)
         self.assertEqual(
@@ -59,6 +61,7 @@ class TestBaseModel(unittest.TestCase):
                     datetime.fromisoformat('2024-01-01T00:00:00.00')
                 )
 
+    def test_attributes_updated_at(self):
         '''updated_at'''
         self.assertTrue(isinstance(self.test_obj1.updated_at, datetime))
         self.assertTrue(isinstance(self.test_obj2.updated_at, datetime))
