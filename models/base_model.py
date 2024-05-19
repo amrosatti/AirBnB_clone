@@ -18,16 +18,16 @@ class BaseModel:
                                 (given if constructing by a dict)
         """
         if kwargs is not None:
-            for k in list(kwargs.keys()):
-                if k != '__class__':
-                    if k in ['created_at', 'updated_at']:
+            for keys, value in kwargs.items():
+                if key != '__class__':
+                    if key in ['created_at', 'updated_at']:
                         setattr(self, k, datetime.fromisoformat(kwargs[k]))
 
-                    setattr(self, k, kwargs[k])
-        else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
+                    setattr(self, key, value)
+
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = self.created_at
 
     def save(self):
         """Updates 'updated_at' attribute
