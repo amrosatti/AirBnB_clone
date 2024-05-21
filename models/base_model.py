@@ -16,9 +16,9 @@ class BaseModel:
             args (:obj:tuble): Not used
             kwargs (:obj:dict): Arguments dictionary
         """
-        if kwargs not None:
+        if kwargs is not None:
             for k, v in kwargs:
-                if k = '__class__':
+                if k == '__class__':
                     continue
                 if k in ['created_at', 'updated_at']:
                     self.setattr(k, datetime.fromisoformat(v))
@@ -33,7 +33,7 @@ class BaseModel:
     def save(self):
         """Updates 'updated_at' attribute
         """
-        self.setattr('updated_at', datetime.now())
+        setattr(self, 'updated_at', datetime.now())
 
     def to_dict(self):
         """Returns a dictionary containing '__dict__' adding class name
