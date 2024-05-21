@@ -7,16 +7,17 @@ from datetime import datetime
 
 
 class BaseModel:
-    """BaseModel Class"""
+    """BaseModel Class
+    """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         """Constructor
 
         Args:
-            args (:obj:tuble): Not used
             kwargs (:obj:dict): Arguments dictionary
-                                (given if constructing by a dict)
+                                (given if constructing by keyword arguments)
         """
+<<<<<<< HEAD
         if kwargs is not None:
             for keys, value in kwargs.items():
                 if key != '__class__':
@@ -28,6 +29,21 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at
+=======
+        if not kwargs:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
+            return
+
+        for key, value in kwargs.items():
+            if key == '__class__':
+                continue
+            if key in ["created_at", "updated_at"]:
+                setattr(self, key, datetime.fromisoformat(value))
+                continue
+            setattr(self, key, value)
+>>>>>>> 5c9fdf6 (finished the base model and unittest for it)
 
     def save(self):
         """Updates 'updated_at' attribute
