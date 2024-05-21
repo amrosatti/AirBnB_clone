@@ -17,19 +17,6 @@ class BaseModel:
             kwargs (:obj:dict): Arguments dictionary
                                 (given if constructing by keyword arguments)
         """
-<<<<<<< HEAD
-        if kwargs is not None:
-            for keys, value in kwargs.items():
-                if key != '__class__':
-                    if key in ['created_at', 'updated_at']:
-                        setattr(self, k, datetime.fromisoformat(kwargs[k]))
-
-                    setattr(self, key, value)
-
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
-=======
         if not kwargs:
             self.id = str(uuid4())
             self.created_at = datetime.now()
@@ -43,7 +30,6 @@ class BaseModel:
                 setattr(self, key, datetime.fromisoformat(value))
                 continue
             setattr(self, key, value)
->>>>>>> 5c9fdf6 (finished the base model and unittest for it)
 
     def save(self):
         """Updates 'updated_at' attribute

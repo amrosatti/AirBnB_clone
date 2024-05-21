@@ -20,7 +20,7 @@ class TestBaseModel(unittest.TestCase):
         self.test_id = str(uuid4())
         self.test_createdat = datetime(
                 2024, 1, 1,
-                00, 00, 00, 2332).isoformat()
+                00, 00, 00, 00).isoformat()
         self.test_updatedat = datetime.now().isoformat()
         self.test_obj1 = BaseModel()
         self.test_obj2 = BaseModel(
@@ -31,41 +31,37 @@ class TestBaseModel(unittest.TestCase):
     def test_init(self):
         """Tests the initialization of instances
         """
-        '''Empty Arguments'''
         self.assertTrue('id' in dir(self.test_obj1))
         self.assertTrue('created_at' in dir(self.test_obj1))
         self.assertTrue('updated_at' in dir(self.test_obj1))
 
     def test_init_kwargs(self):
-        '''Valid kwargs'''
+        """Valid kwargs
+        """
         self.assertTrue('id' in dir(self.test_obj2))
         self.assertTrue('created_at' in dir(self.test_obj2))
         self.assertTrue('updated_at' in dir(self.test_obj2))
         self.assertTrue('something' in dir(self.test_obj2))
 
     def test_attributes_id(self):
-        """Tests the instance attributes
+        """Tests the instance attribute `id`
         """
-        '''id'''
         self.assertTrue(isinstance(self.test_obj1.id, str))
         self.assertTrue(isinstance(self.test_obj2.id, str))
 
     def test_attributes_created_at(self):
-        '''created_at'''
+        """Tests `created_at` attribute
+        """
         self.assertTrue(isinstance(self.test_obj1.created_at, datetime))
         self.assertTrue(isinstance(self.test_obj2.created_at, datetime))
-<<<<<<< HEAD
-        self.assertTrue(self.test_obj1.created_at is self.create_time)
-        self.assertEqual(self.test_obj1.created_at, self.create_time)
         self.assertEqual(
                     self.test_obj2.created_at,
-                    datetime.fromisoformat('2024-01-01T00:00:00.00')
+                    datetime.fromisoformat('2024-01-01T00:00:00')
                 )
-=======
->>>>>>> 5c9fdf6 (finished the base model and unittest for it)
 
     def test_attributes_updated_at(self):
-        '''updated_at'''
+        """Tests `updated_at` attribute
+        """
         self.assertTrue(isinstance(self.test_obj1.updated_at, datetime))
         self.assertTrue(isinstance(self.test_obj2.updated_at, datetime))
         self.assertEqual(self.test_obj1.created_at, self.test_obj1.updated_at)
@@ -83,7 +79,6 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         """Tests `to_dict()` instance method
         """
-        dt_pattern = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.?\d*'
         self.assertTrue(isinstance(self.test_obj1.to_dict(), dict))
         self.assertTrue(isinstance(self.test_obj2.to_dict(), dict))
         for k in list(self.test_obj1.to_dict().keys()):
@@ -105,6 +100,10 @@ class TestBaseModel(unittest.TestCase):
                 self.test_obj2.to_dict()['__class__']
                 )
 
+    def test_to_dict_dates(self):
+        """Tests the dates in instance
+        """
+        dt_pattern = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.?\d*'
         self.assertTrue(isinstance(
             self.test_obj1.to_dict()['created_at'],
             str
