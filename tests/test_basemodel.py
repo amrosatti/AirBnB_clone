@@ -10,9 +10,13 @@ import unittest
 import re
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> fileStorage_engine
+=======
+
+>>>>>>> test_models
 class TestBaseModel(unittest.TestCase):
     """Tests `BaseModel` Class
     """
@@ -34,8 +38,6 @@ class TestBaseModel(unittest.TestCase):
     def test_init(self):
         """Tests the initialization of instances
         """
-<<<<<<< HEAD
-=======
         self.assertTrue('id' in dir(self.test_obj1))
         self.assertTrue('created_at' in dir(self.test_obj1))
         self.assertTrue('updated_at' in dir(self.test_obj1))
@@ -59,6 +61,8 @@ class TestBaseModel(unittest.TestCase):
         """
         self.assertTrue(isinstance(self.test_obj1.created_at, datetime))
         self.assertTrue(isinstance(self.test_obj2.created_at, datetime))
+        self.assertTrue(self.test_obj1.created_at is self.create_time)
+        self.assertEqual(self.test_obj1.created_at, self.create_time)
         self.assertEqual(
                     self.test_obj2.created_at,
                     datetime.fromisoformat('2024-01-01T00:00:00')
@@ -84,6 +88,7 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         """Tests `to_dict()` instance method
         """
+        dt_pattern = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.?\d*'
         self.assertTrue(isinstance(self.test_obj1.to_dict(), dict))
         self.assertTrue(isinstance(self.test_obj2.to_dict(), dict))
         for k in list(self.test_obj1.to_dict().keys()):

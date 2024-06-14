@@ -17,8 +17,19 @@ class BaseModel:
 
         Args:
             kwargs (:obj:dict): Arguments dictionary
-                                (given if constructing by a dict)
+                                (given if constructing by keyword arguments)
         """
+        if kwargs is not None:
+            for keys, value in kwargs.items():
+                if key != '__class__':
+                    if key in ['created_at', 'updated_at']:
+                        setattr(self, k, datetime.fromisoformat(kwargs[k]))
+
+                    setattr(self, key, value)
+
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = self.created_at
         if not kwargs:
             self.id = str(uuid4())
             self.created_at = datetime.now()
