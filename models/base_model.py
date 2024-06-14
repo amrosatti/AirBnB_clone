@@ -2,8 +2,10 @@
 
 """Defines BaseModel Class
 """
+
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -15,12 +17,13 @@ class BaseModel:
 
         Args:
             kwargs (:obj:dict): Arguments dictionary
-                                (given if constructing by keyword arguments)
+                                (given if constructing by a dict)
         """
         if not kwargs:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            models.storage.new(self)
             return
 
         for key, value in kwargs.items():
@@ -35,6 +38,7 @@ class BaseModel:
         """Updates 'updated_at' attribute
         """
         setattr(self, 'updated_at', datetime.now())
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing '__dict__' adding class name

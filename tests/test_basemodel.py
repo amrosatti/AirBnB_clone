@@ -9,7 +9,10 @@ from uuid import uuid4
 import unittest
 import re
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fileStorage_engine
 class TestBaseModel(unittest.TestCase):
     """Tests `BaseModel` Class
     """
@@ -31,6 +34,8 @@ class TestBaseModel(unittest.TestCase):
     def test_init(self):
         """Tests the initialization of instances
         """
+<<<<<<< HEAD
+=======
         self.assertTrue('id' in dir(self.test_obj1))
         self.assertTrue('created_at' in dir(self.test_obj1))
         self.assertTrue('updated_at' in dir(self.test_obj1))
