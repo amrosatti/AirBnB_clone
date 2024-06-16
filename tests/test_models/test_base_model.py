@@ -15,6 +15,10 @@ class TestBaseModel(unittest.TestCase):
     """
 
     p = r"[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}"
+    """str: UUID4 regex pattern
+
+    Raised to the module level for coding style purpose
+    """
 
     def setUp(self):
         """Instantiates a `BaseModel` Object
@@ -98,6 +102,15 @@ class TestBaseModel(unittest.TestCase):
             for i in ['created_at', 'updated_at']:
                 self.assertTrue(isinstance(test_object.to_dict()[i], str))
                 self.assertTrue(iso_pattern.match(test_object.to_dict()[i]))
+
+    def test_str(self):
+        """Tests the value of the string representation of the object
+        """
+        pattern = r"\[BaseModel\] \(%s\) \{.+\}" % self.p
+        str_pattern = re.compile(pattern)
+
+        for test_object in [self.test_obj1, self.test_obj2]:
+            self.assertTrue(str_pattern.match(str(test_object)))
 
 
 if __name__ == '__main__':
