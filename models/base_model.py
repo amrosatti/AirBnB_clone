@@ -55,6 +55,6 @@ class BaseModel:
         """Instance string representation
         """
         return "[{}] ({}) {}".format(
-                type(self).__name__,
+                self.__class__.__name__,
                 self.id, self.__dict__
             )
