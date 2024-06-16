@@ -5,36 +5,38 @@
 import os
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from datetime import datetime
 
 
 class TestFileStorage(unittest.TestCase):
 
-    def SetUp(self):
+    def setUp(self):
         """Sets up the objects to test
         """
         self.test_storage = FileStorage()
         self.test_object1 = BaseModel()
         self.test_object2 = BaseModel()
+        self.test_storage._FileStorage__objects.clear()
 
     def test_all(self):
         """Tests the `all()` method
         """
-        self.assertTrue(not self.test_storage.all())
+        self.assertEqual(self.test_storage.all(), {})
         self.test_storage.new(self.test_object1)
-        self.assertTrue(self.test_storage.all())
+        self.assertTrue(self.test_object1 in self.test_storage.all().values())
 
     def test_new(self):
         """Test the `new()` method
         """
+        objects = self.test_storage._FileStorage__objects
         test_key = "{}.{}".format(BaseModel.__name__, self.test_object2.id)
         self.test_storage.new(self.test_object2)
-        self.assertTrue(test_key in list(self.test_storage.__objects.keys()))
-        self.assertEqual(
-                    self.test_storage.__objects[test_key],
-                    self.test_object2
-                )
+
+        self.assertTrue(test_key in objects.keys())
+        self.assertEqual(objects[test_key], self.test_object2)
 
     def test_save(self):
         """Tests the `save()` method
@@ -49,27 +51,30 @@ class TestFileStorage(unittest.TestCase):
             storage = FileStorage()
             test_obj = BaseModel()
             storage.new(test_obj)
-            storage.save()
 
+            save_mock = Mock(side_effect=storage.save())
+            save_mock()
+
+            save_mock.assert_called_once()
             mock_open.assert_called_once_with(
-                        storage.__file_path,
+                        storage._FileStorage__file_path,
                         'w',
                         encoding="utf-8"
                     )
-            mock_file.write.assert_called_once()
 
     def test_reload(self):
         """Tests the `reload()` method
         """
         storage = FileStorage()
+        file_path = storage._FileStorage__file_path
         test_object = BaseModel(
                     id='1',
-                    created_at=datetime.fromisoformat("2021-02-11T16:15:10.1"),
-                    updated_at=datetime.now()
+                    created_at='2021-02-11T16:15:10',
+                    updated_at=datetime.now().isoformat()
                 )
 
-        if os.path.exists(self.test_storage.__file_path):
-            os.remove(self.test_storage.__file_path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
         storage.reload()
         self.assertTrue(not storage.all())

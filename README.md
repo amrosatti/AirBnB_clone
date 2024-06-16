@@ -25,6 +25,7 @@ The project focuses on:
 * `unittest` library (for testing) (`pip install unittest`)
 * `cmd` library (for CLI) (`pip install cmd`)
 * `uuid` library (for objects id's) (`pip install uuid`)
+* 'datetime' library (for creation and update date and time) (`pip install datetime`)
 
 **Project Structure:**
 
@@ -37,7 +38,7 @@ AirBnB_clone/
 ├── models		# Holds all class definitions for AirBnB entities
 │   ├── __init__.py
 │   ├── amenity.py
-│   ├── base_model.py	# BaseModel class the parent class for all the AirBnB model classes
+│   ├── base_model.py	# BaseModel class the parent class for all the AirBnB model 
 │   ├── city.py
 │   ├── engine		# Storage Engine Directory
 │   │   ├── __init__.py
@@ -48,17 +49,22 @@ AirBnB_clone/
 │   └── user.py
 ├── requirements.txt	# Required libraries for the project
 └── tests		# Unit Tests for all components
-    ├── test_amenity.py
-    ├── test_basemodel.py
-    ├── test_city.py
+    ├── __init__.py
     ├── test_console.py
-    ├── test_filestorage.py
-    ├── test_place.py
-    ├── test_review.py
-    ├── test_state.py
-    └── test_user.py
+    └── test_models
+        ├── __init__.py
+        ├── test_amenity.py
+        ├── test_base_model.py
+        ├── test_city.py
+        ├── test_engine
+        │   ├── __init__.py
+        │   └── test_file_storage.py
+        ├── test_place.py
+        ├── test_review.py
+        ├── test_state.py
+        └── test_user.py
 
-3 directories, 24 files
+5 directories, 27 files
 ```
 
 **Running the Project:**
