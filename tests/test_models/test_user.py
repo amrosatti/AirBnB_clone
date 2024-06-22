@@ -9,7 +9,7 @@ import unittest
 
 
 class TestUser(unittest.TestCase):
-    """Tests User class
+    """User Class Unittest Test Cases
     """
 
     __attributes = {
@@ -21,7 +21,6 @@ class TestUser(unittest.TestCase):
     """dict: User attributes dictinary
     """
 
-
     def test_init(self):
         """Tests `User` instantiation
         """
@@ -32,6 +31,8 @@ class TestUser(unittest.TestCase):
         self.assertTrue(issubclass(type(test_object), BaseModel))
 
     def test_attributes(self):
+        """Tests `User` attributes
+        """
         test_object = User()
 
         for attr, a_type in self.__attributes.items():
