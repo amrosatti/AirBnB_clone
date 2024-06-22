@@ -13,7 +13,7 @@ class TestReview(unittest.TestCase):
     """
 
     __attributes = {"place_id": str, "user_id": str, "text": str}
-    """dict: Review attributes dictinary
+    """dict: Review public class attributes
     """
 
     def test_init(self):

@@ -13,7 +13,7 @@ class TestCity(unittest.TestCase):
     """
 
     __attributes = {"state_id": str, "name": str}
-    """dict: City attributes dictinary
+    """dict: City  public class attributes
     """
 
     def test_init(self):

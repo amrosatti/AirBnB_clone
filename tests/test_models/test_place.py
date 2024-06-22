@@ -24,7 +24,7 @@ class TestPlace(unittest.TestCase):
                 "longitude": float,
                 "amenity_ids": list
             }
-    """dict: Place attributes dictinary
+    """dict: Place public class attributes
     """
 
     def test_init(self):

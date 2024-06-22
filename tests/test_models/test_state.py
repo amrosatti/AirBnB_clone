@@ -13,7 +13,7 @@ class TestState(unittest.TestCase):
     """
 
     __attributes = ("name", str)
-    """dict: State attributes dictinary
+    """tuple: State public class attributes
     """
 
     def test_init(self):
