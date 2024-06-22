@@ -10,7 +10,15 @@ class TestUser(unittest.TestCase):
     """Tests User class
     """
 
-    def test_user(self):
+    def test_attributes(self):
         """Tests `User` attributes
         """
-        pass
+        test_object = User()
+        self.assertTrue(hasattr(test_object, "email"))
+        self.assertTrue(hasattr(test_object, "password"))
+        self.assertTrue(hasattr(test_object, "first_name"))
+        self.assertTrue(hasattr(test_object, "last_name"))
+
+
+if __name__ == "__main__":
+    unittest.main()
