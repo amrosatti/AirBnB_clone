@@ -1,9 +1,12 @@
 #!/usr/bin/python3
-""" A module description of the subclass State """
-from base_model import BaseModel
+"""Defines the `State` Class
+"""
+
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """  A class State which inherites from BaseModel """
+    """Class State inheriting from BaseModel class
+    """
 
-    name: str = ""
+    name = ""
