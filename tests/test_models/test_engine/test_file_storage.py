@@ -69,8 +69,10 @@ class TestFileStorage(unittest.TestCase):
         """
         file_path = storage._FileStorage__file_path
         test_object = BaseModel()
+
         storage.new(test_object)
         storage.save()
+        storage.reload()
 
         objects = FileStorage._FileStorage__objects
 
