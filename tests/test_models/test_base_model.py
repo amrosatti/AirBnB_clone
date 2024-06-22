@@ -4,10 +4,14 @@
 """
 
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from datetime import datetime
 from uuid import uuid4
 import unittest
 import re
+import os
+import time
+import json
 
 
 class TestBaseModel(unittest.TestCase):
@@ -77,10 +81,12 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Tests `save()` instance method
         """
-        for test_object in self.objects:
-            old_update = test_object.updated_at
-            test_object.save()
-            self.assertTrue(old_update != test_object.updated_at)
+        test_object = BaseModel()
+        time.sleep(1)
+        datetime_now = datetime.now()
+        test_object.save()
+        diff = test_object.updated_at - datetime_now
+        self.assertTrue(abs(diff.total_seconds()) < 0.01)
 
     def test_to_dict(self):
         """Tests `to_dict()` instance method

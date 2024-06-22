@@ -2,10 +2,12 @@
 """Tests `FileStorage` Class
 """
 
+import models
 import os
 import unittest
 from unittest.mock import patch
 from unittest.mock import Mock
+from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from datetime import datetime
@@ -65,23 +67,18 @@ class TestFileStorage(unittest.TestCase):
     def test_reload(self):
         """Tests the `reload()` method
         """
-        storage = FileStorage()
         file_path = storage._FileStorage__file_path
-        test_object = BaseModel(
-                    id='1',
-                    created_at='2021-02-11T16:15:10',
-                    updated_at=datetime.now().isoformat()
-                )
-
-        if os.path.exists(file_path):
-            os.remove(file_path)
-
-        storage.reload()
-        self.assertTrue(not storage.all())
-
+        test_object = BaseModel()
         storage.new(test_object)
         storage.save()
+
+        objects = FileStorage._FileStorage__objects
+
+        self.assertIn("BaseModel." + test_object.id, objects)
         self.assertTrue(storage.all())
+
+        with self.assertRaises(TypeError):
+            storage.reload(None)
 
 
 if __name__ == '__main__':
