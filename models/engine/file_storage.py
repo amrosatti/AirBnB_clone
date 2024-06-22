@@ -3,7 +3,8 @@
 """
 
 from models.base_model import BaseModel
-from os.path import getsize
+from models.user import User
+import os.path
 import json
 
 
@@ -34,19 +35,17 @@ class FileStorage:
         for k, v in self.__objects.items():
             objects_todict[k] = v.to_dict()
 
-        with open(self.__file_path, 'w', encoding="utf-8") as f:
-            f.write(json.dumps(objects_todict))
+        with open(self.__file_path, 'w', encoding="utf-8") as json_file:
+            json_file.write(json.dumps(objects_todict))
 
     def reload(self):
         """Deserializes the JSON file to __objects
         """
         try:
-            if getsize(self.__file_path) != 0:
-                with open(self.__file_path, 'r') as f:
-                    json_string = f.read()
-                    json_objects = json.loads(json_string)
-        except FileNotFoundError:
-            return
+            with open(self.__file_path, 'r') as json_file:
+                json_objects = json.loads(json_file.read())
 
-        for k, v in json_objects.items():
-            self.__objects[k] = BaseModel(**v)
+            for key, obj in json_objects.items():
+                self.__objects[key] = eval(obj["__class__"])(**obj)
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
+            pass
