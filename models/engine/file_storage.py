@@ -12,7 +12,7 @@ class FileStorage:
     """Serializes/deserializes JSON file to instance and vice versa
     """
 
-    __file_path = "objects.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):

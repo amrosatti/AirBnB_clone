@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class doesn\'t exist **')
             return
 
-        obj = BaseModel()
+        obj = eval(args)()
         storage.save()
         print(obj.id)
 
