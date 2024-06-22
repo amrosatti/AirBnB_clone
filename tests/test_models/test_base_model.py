@@ -89,7 +89,7 @@ class TestBaseModel(unittest.TestCase):
         iso_pattern = re.compile(pattern)
         cls = '__class__'
 
-        for test_object in [self.test_obj1, self.test_obj2]:
+        for test_object in self.objects:
             self.assertTrue(isinstance(test_object.to_dict(), dict))
 
             for k in list(test_object.to_dict().keys()):
@@ -109,7 +109,7 @@ class TestBaseModel(unittest.TestCase):
         pattern = r"\[BaseModel\] \(%s\) \{.+\}" % self.p
         str_pattern = re.compile(pattern)
 
-        for test_object in [self.test_obj1, self.test_obj2]:
+        for test_object in self.objrcts:
             self.assertTrue(str_pattern.match(str(test_object)))
 
 
