@@ -67,21 +67,25 @@ class TestFileStorage(unittest.TestCase):
     def test_reload(self):
         """Tests the `reload()` method
         """
-        file_path = storage._FileStorage__file_path
-        test_storage = FileStorage()
-
+        '''Reset Storage'''
+        FileStorage.__FileStorage__objects = {}
+        file_path = FileStorage._FileStorage__file_path
         try:
             os.remove(file_path)
         except FileNotFoundError:
             pass
 
-        with open(file_path, "w", encoding="utf-8") as file_w:
-            file_w.write("{}")
+        storage.reload()
+        self.assertEqual(FileStorage._FileStorage__objects, {})
 
-        with open(file_path, "r", encoding="utf-8") as file_r:
-            self.assertEqual(file_r.read(), "{}")
+        test_object = BaseModel()
+        key = "{}.{}".format(type(test_object).__name__, test_object.id)
 
-        self.assertIs(test_storage.reload(), None)
+        storage.new(test_object)
+        storage.save()
+        storage.reload()
+
+        self.assertEqual(test_object.to_dict(), storage.all()[key].to_dict())
 
 
 if __name__ == '__main__':
