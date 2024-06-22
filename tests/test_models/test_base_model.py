@@ -109,7 +109,7 @@ class TestBaseModel(unittest.TestCase):
         pattern = r"\[BaseModel\] \(%s\) \{.+\}" % self.p
         str_pattern = re.compile(pattern)
 
-        for test_object in self.objrcts:
+        for test_object in self.objects:
             self.assertTrue(str_pattern.match(str(test_object)))
 
 

@@ -6,13 +6,15 @@ import cmd
 import re
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """Command interpeter from the cmd class
     """
 
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
+    classes = ['BaseModel', 'User']
 
     def do_quit(self, line):
         """Quit command to exit the program
@@ -33,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print('** class name missing **')
             return
-        if args != 'BaseModel':
+        if args not in self.classes:
             print('** class doesn\'t exist **')
             return
 
@@ -44,8 +46,8 @@ class HBNBCommand(cmd.Cmd):
     def help_create(self):
         """Documents the `create` command
         """
-        print('Creates a new instance of (BaseModel),\
-                saves it to the JSON file and prints the (id).\
+        print('Creates a new instance of (BaseModel),\n\
+                saves it to the JSON file and prints the (id).\n\
                 `usage: create <class name>`')
 
     def do_show(self, args):
@@ -61,12 +63,15 @@ class HBNBCommand(cmd.Cmd):
         if length == 0:
             print('** class name missing **')
             return
-        if 'BaseModel' not in args:
+        if args[0] not in self.classes:
             print('** class doesn\'t exist **')
             return
-        if args[0] == 'BaseModel' and length == 1:
+        if length == 1:
             print('** instance id missing **')
             return
+
+        objects = storage.all()
+        key = "{}.{}".format(args[0], args[1])
 
         try:
             print(objects[key])
@@ -77,8 +82,8 @@ class HBNBCommand(cmd.Cmd):
     def help_show(self):
         """Documents the `show` command
         """
-        print('Prints the string representation of an instance,\
-                based on the class name and (id).\
+        print('Prints the string representation of an instance,\n\
+                based on the class name and (id).\n\
                 `usage: show <class name> <id>`')
 
     def do_destroy(self, args):
@@ -87,19 +92,18 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         length = len(args)
 
-        objects = storage.all()
-        if length > 1:
-            key = "BaseModel.{}".format(args[1])
-
         if length == 0:
             print('** class name missing **')
             return
-        if 'BaseModel' not in args:
+        if args[0] not in self.classes:
             print('** class doesn\'t exist **')
             return
-        if args[0] == 'BaseModel' and length == 1:
+        if length == 1:
             print('** instance id missing **')
             return
+
+        objects = storage.all()
+        key = "{}.{}".format(args[0], args[1])
 
         try:
             del objects[key]
@@ -111,15 +115,15 @@ class HBNBCommand(cmd.Cmd):
     def help_destroy(self):
         """Documents the `destroy` command
         """
-        print('Deletes an instance\
-                based on the class name and (id).\
-                Saves the change into the JSON file.\
+        print('Deletes an instance\n\
+                based on the class name and (id).\n\
+                Saves the change into the JSON file.\n\
                 `usage: destroy <class name> <id>`')
 
     def do_all(self, args):
         """Prints all instances
         """
-        if args and args != 'BaseModel':
+        if args and args not in self.classes:
             print('** class doesn\'t exist **')
             return
 
@@ -130,8 +134,8 @@ class HBNBCommand(cmd.Cmd):
     def help_all(self):
         """Documents the `all` command
         """
-        print('Prints all string representation of all instances,\
-                based or not on the class name.\
+        print('Prints all string representation of all instances,\n\
+                based or not on the class name.\n\
                 `usage: all [<class name>]`')
 
     def do_update(self, args):
@@ -143,7 +147,7 @@ class HBNBCommand(cmd.Cmd):
         if not length:
             print('** class name missing **')
             return
-        if args[0] != 'BaseModel':
+        if args[0] not in self.classes:
             print('** class doesn\'t exist **')
             return
         if length == 1:
@@ -168,9 +172,9 @@ class HBNBCommand(cmd.Cmd):
     def help_update(self):
         """Documets the `update` command
         """
-        print('Updates an instance based on the class name and (id),\
-                by adding or updating attributes.\
-                Saves the change into the JSON file.\
+        print('Updates an instance based on the class name and (id),\n\
+                by adding or updating attributes.\n\
+                Saves the change into the JSON file.\n\
                 `usage: update <class name> <id> <attribute> "<value>"`')
 
 
