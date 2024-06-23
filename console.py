@@ -7,6 +7,11 @@ import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -14,7 +19,10 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    classes = ['BaseModel', 'User']
+    classes = [
+                'BaseModel', 'User', 'Place', 'State',
+                'City', 'Amenity', 'Review'
+            ]
 
     def do_quit(self, line):
         """Quit command to exit the program
@@ -123,12 +131,21 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """Prints all instances
         """
-        if args and args not in self.classes:
+        arg = args
+        if arg and arg not in self.classes:
             print('** class doesn\'t exist **')
             return
 
         objects = storage.all()
-        objects_list = [str(obj) for obj in objects.values()]
+        objects_list = []
+
+        if arg:
+            for obj in objects.values():
+                if arg == type(obj).__name__:
+                    objects_list.append(str(obj))
+        else:
+            objects_list = [str(obj) for obj in objects.values()]
+
         print(objects_list)
 
     def help_all(self):
