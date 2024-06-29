@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Tests `FileStorage` Class
+"""Defines Test Cases for `FileStorage` Class
 """
 
 import models
@@ -22,6 +22,12 @@ class TestFileStorage(unittest.TestCase):
         self.test_object1 = BaseModel()
         self.test_object2 = BaseModel()
         self.test_storage._FileStorage__objects.clear()
+
+    def tearDown(self):
+        try:
+            os.remove('file.json')
+        except:
+            pass
 
     def test_all(self):
         """Tests the `all()` method

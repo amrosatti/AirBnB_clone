@@ -2,10 +2,9 @@
 """Defines Test Cases for `User` Class
 """
 
-from models import storage
+import unittest
 from models.user import User
 from models.base_model import BaseModel
-import unittest
 
 
 class TestUser(unittest.TestCase):

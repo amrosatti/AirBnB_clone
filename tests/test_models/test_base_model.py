@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """Defines Test Cases for `BaseModel` Class
 """
 
@@ -39,6 +38,12 @@ class TestBaseModel(unittest.TestCase):
                     'something': 'something_else'
                 })
         self.objects = [self.test_obj1, self.test_obj2]
+
+    def tearDown(self):
+        try:
+            os.remove('file.json')
+        except:
+            pass
 
     def test_init(self):
         """Tests the initialization of instances

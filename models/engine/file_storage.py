@@ -4,6 +4,7 @@
 
 import os.path
 import json
+from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -54,3 +55,54 @@ class FileStorage:
                 self.__objects[key] = eval(obj["__class__"])(**obj)
         except (FileNotFoundError, json.decoder.JSONDecodeError):
             pass
+
+    def classes(self):
+        """Returns a dictionary of the models classes
+        """
+        classes = {
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
+
+        return classes
+
+    def attributes(self):
+        """Returns the attributes of each class and their types
+        """
+        attributes = {
+                        "BaseModel": {
+                                        "id": str,
+                                        "created_at": datetime,
+                                        "updated_at": datetime
+                                     },
+                        "User": {
+                                    "email": str,
+                                    "password": str,
+                                    "first_name": str,
+                                    "last_name": str
+                                },
+                        "State": {"name": str},
+                        "City": {"state_id": str, "name": str},
+                        "Amenity": {"name": str},
+                        "Place": {
+                                    "city_id": str,
+                                    "user_id": str,
+                                    "name": str,
+                                    "description": str,
+                                    "number_rooms": int,
+                                    "number_bathrooms": int,
+                                    "max_guest": int,
+                                    "price_by_night": int,
+                                    "latitude": float,
+                                    "longitude": float,
+                                    "amenity_ids": list
+                                  },
+                        "Review": {
+                                    "place_id": str,
+                                    "user_id": str,
+                                    "text": str
+                                  }
+                    }
+
+        return attributes
